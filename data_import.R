@@ -1,3 +1,5 @@
+# Get BBS population time-series data for analysis
+
 library(rdataretriever)
 library(dplyr)
 library(DBI)
@@ -29,8 +31,7 @@ get_data <- function(){
                     ON counts.statenum=breed_bird_survey_routes.statenum
                     AND counts.route=breed_bird_survey_routes.route
                 WHERE breed_bird_survey_weather.runtype=1 AND breed_bird_survey_weather.rpid=101"
-  data <- tbl(con, dplyr::sql(query)) %>%
-    collect(n = Inf)
+  collect(tbl(con, dplyr::sql(query)), n = Inf)
 }
 
 #' Get BBS population time-series data
@@ -54,6 +55,8 @@ get_pop_ts_data <- function(start_yr, end_yr, min_num_yrs){
 }
 
 #' Filter BBS to specified time series period and number of samples
+#'
+#' Modified from https://github.com/weecology/bbs-forecasting
 #'
 #' @param bbs_data dataframe that contains BBS site_id and year columns
 #' @param start_yr num first year of time-series
