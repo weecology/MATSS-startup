@@ -4,6 +4,7 @@ library(rdataretriever)
 library(dplyr)
 library(DBI)
 library(tidyr)
+library(feather)
 
 # TODO:
 # 3. Initial filter of species (unknown water,etc)
@@ -78,3 +79,4 @@ filter_ts <- function(bbs_data, start_yr, end_yr, min_num_yrs){
 }
 
 pop_ts_data = get_pop_ts_data(1982, 2016, 35)
+write_feather(pop_ts_data, './data/bbs_pop_data.feather')
